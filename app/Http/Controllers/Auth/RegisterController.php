@@ -48,8 +48,8 @@ class RegisterController extends Controller
     {
         try {
             $this->validator($request->all())->validate();
-        } catch (\Exception $e) {
-            return back()->with('error', 'error of valodation');
+        }catch(\Exception $e){
+            return back()->with('error', $e->getMessage());
         }
         $email = $request->email;
         $password = $request->password;
@@ -57,7 +57,7 @@ class RegisterController extends Controller
         $objUser = $this->create(['email'=>$email, 'password'=>$password]);
 
         if (!($objUser instanceof User)) {
-            return back()->with('errors', 'Cant create object ofuser');
+            return back()->with('error', 'Cant create object ofuser');
         }
 
         if ($isAuth) {
