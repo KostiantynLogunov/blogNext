@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->tinyInteger('isAdmin')->default(0);
+            $table->tinyInteger('confirm')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

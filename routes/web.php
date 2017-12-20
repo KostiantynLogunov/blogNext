@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('form');
-});
-Route::post('send-mail', 'MailSetting@send_form');
+Route::get('/', 'welcomeContrller@index')->name('welcome.index');
+Route::get('/article/{id}', 'welcomeContrller@show')->where('id','\d+')->name('welcome.show');
+Route::post('/article/{id}', 'welcomeContrller@saveComment')->where('id','\d+')->name('welcome.saveComment');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -34,8 +33,10 @@ Route::group(['middleware'=>'auth'], function () {
     Route::group(['prefix'=>'admin','middleware'=>'admin'], function () {
         Route::get('/', 'Admin\AccountController@index')->name('admin');
 
+        //ARTICLES
         Route::resource('articles', 'Admin\ArticleController');
 
+//CATEGORY
         Route::get('/categories', 'Admin\CategoriesController@index')->name('categories');
 
         Route::get('/categories/add', 'Admin\CategoriesController@addCategory')->name('categories.add');
@@ -48,6 +49,10 @@ Route::group(['middleware'=>'auth'], function () {
 
         Route::delete('/categories/delete', 'Admin\CategoriesController@deleteCategory')->name('categories.delete');
 
+        //USERS
+        ROUTE::get('/users','Admin\UsersController@index')->name('users');
+        ROUTE::get('/users/{id}/sendMail','Admin\UsersController@sendMsg')->name('users.sendMsg');
+        ROUTE::post('/users/{id}/sendMail','Admin\UsersController@sendMsg')->name('users.sendMsg');
 
 
     });

@@ -8,7 +8,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello!, {{ $name }} ( {{ $email }} )</h1>
+    <h1>Hello!,  {{ $email }} </h1>
+
+    <p>
+        {{$text}}
+    </p>
 
 </body>
 </html>
