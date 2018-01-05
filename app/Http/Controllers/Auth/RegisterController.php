@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Entities\User;
 use App\Http\Controllers\Controller;
+use App\Mail\ConfirmEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -28,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/my/account';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -51,10 +53,13 @@ class RegisterController extends Controller
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }
+
         $email = $request->email;
         $password = $request->password;
         $isAuth = $request->has('remember') ? true: false;
         $objUser = $this->create(['email'=>$email, 'password'=>$password]);
+        $token = User::where('email',$email)->first()->token;
+
 
         if (!($objUser instanceof User)) {
             return back()->with('error', 'Cant create object ofuser');
@@ -63,7 +68,9 @@ class RegisterController extends Controller
         if ($isAuth) {
             $this->guard()->login($objUser);
         }
-        return redirect(route('account'))->with('success', 'You are registered');
+
+        Mail::to($email)->send(new ConfirmEmail($email, $token));
+        return redirect(route('welcome.index'))->with('success', 'You registered, please confirm your email and then login');
     }
 
     /**
@@ -91,6 +98,7 @@ class RegisterController extends Controller
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'token' => str_random(30)
         ]);
     }
 }

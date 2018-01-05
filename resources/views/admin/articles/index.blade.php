@@ -10,6 +10,7 @@
             <tr>
                 <th>#</th>
                 <th>Title</th>
+                <th>Category</th>
                 <th>Short text</th>
                 <th>Full text</th>
                 <th>Author</th>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ $article->id }}</td>
                     <td><b>{{ $article->title }}</b></td>
+                    <td>{{ \App\Entities\Category::find($article->category_id)['title'] }}</td>
                     <td>{!! substr($article->short_text, 0, 100) !!} ...</td>
                     <td>{!! substr($article->full_text, 0, 200) !!} ...</td>
                     <td>{!! $article->author !!}</td>

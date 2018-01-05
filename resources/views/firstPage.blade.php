@@ -10,9 +10,37 @@
             <hr>
             <br>
         @endforeach
+
+                {{ $articles->links() }}
+
     </div><!-- /.blog-post -->
     <nav class="blog-pagination">
-        <a class="btn btn-outline-primary" href="#">Older</a>
-        <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
+        {{--<a class="btn btn-outline-primary " href="#">Older</a>
+        <a class="btn btn-outline-secondary disabled" href="#">Newer</a>--}}
+        <div class="row">
+            @if($order == 'desc')
+                <form action="{{ route('welcome.index') }}" method="get">
+                    {{csrf_field()}}
+                    <button type="submit" class="btn btn-outline-primary" href="#">Older</button>
+                </form>
+
+                <form action="{{ route('welcome.index', ['order' => 'asc']) }}" method="post">
+                    {{csrf_field()}}
+                    <button type="submit" class="btn btn-outline-secondary disabled" href="{{ route('welcome.index') }}">Newer</button>
+                </form>
+            @else
+                <form action="{{ route('welcome.index') }}" method="get">
+                    {{csrf_field()}}
+                    <button type="submit" class="btn btn-outline-secondary disabled" href="#">Older</button>
+                </form>
+
+                <form action="{{ route('welcome.index', ['order' => 'asc']) }}" method="post">
+                    {{csrf_field()}}
+                    <button type="submit" class="btn btn-outline-primary" href="{{ route('welcome.index') }}">Newer</button>
+                </form>
+            @endif
+
+        </div>
+
     </nav>
 @endsection

@@ -12,6 +12,17 @@
             </div>
 
             <div class="form-group">
+                <label for="">Choose category</label>
+                <select class="form-control" name="category_id">
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id or ""}}">
+                            {{$category->title or ""}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="">Enter Short text </label>
                 <textarea name="short_text" class="form-control" cols="30" rows="5"></textarea>
             </div>

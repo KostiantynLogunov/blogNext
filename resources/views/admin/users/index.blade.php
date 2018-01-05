@@ -22,7 +22,7 @@
                     <td>{!! $user->created_at->format('d-m-Y H:i') !!}</td>
                     <td>
                         <a href="{{ route('users.sendMsg', ['id' => $user->id]) }}">Send msg</a> ||
-                        <a href="#">Delete</a>
+                        <a href="{{ route('users.delete', ['id' => $user->id]) }}">Delete</a>
                     </td>
                 </tr>
             @endforeach

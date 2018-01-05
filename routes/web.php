@@ -11,22 +11,27 @@
 |
 */
 
-Route::get('/', 'welcomeContrller@index')->name('welcome.index');
+Route::match(['get','post'],'/', 'welcomeContrller@index')->name('welcome.index');
 Route::get('/article/{id}', 'welcomeContrller@show')->where('id','\d+')->name('welcome.show');
 Route::post('/article/{id}', 'welcomeContrller@saveComment')->where('id','\d+')->name('welcome.saveComment');
+Route::get('/about', 'welcomeContrller@about')->name('about');
+Route::get('/comments', 'welcomeContrller@comments')->name('comments');
+
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('/register', 'Auth\RegisterController@register');
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('/login', 'Auth\LoginController@login');
+    Route::get('/confirm/{token}', 'Auth\LoginController@confirmaion')->name('confirm');
+    Route::post('ulogin', 'Auth\LoginController@ulogin');
 });
 
 Route::group(['middleware'=>'auth'], function () {
     Route::get('/my/account', 'AccountController@index')->name('account');
     Route::get('/logout', function () {
         \Auth::logout();
-        return redirect(route('login'));
+        return redirect(route('welcome.index'));
     })->name('logout');
 
     //ADmin
@@ -53,6 +58,7 @@ Route::group(['middleware'=>'auth'], function () {
         ROUTE::get('/users','Admin\UsersController@index')->name('users');
         ROUTE::get('/users/{id}/sendMail','Admin\UsersController@sendMsg')->name('users.sendMsg');
         ROUTE::post('/users/{id}/sendMail','Admin\UsersController@sendMsg')->name('users.sendMsg');
+        ROUTE::get('/users/delete','Admin\UsersController@delete')->name('users.delete');
 
 
     });

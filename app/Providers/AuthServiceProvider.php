@@ -16,6 +16,13 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
+    protected $listen = [
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            // Порписываем здесь обработку события провайдерами от SocialiteProviders
+            'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle',
+        ],
+    ];
+
     /**
      * Register any authentication / authorization services.
      *

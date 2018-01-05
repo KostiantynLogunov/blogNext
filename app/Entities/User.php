@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password',
+        'name', 'email', 'password', 'token', 'confirm', 'from_network', 'ip'
     ];
 
     /**
@@ -26,17 +26,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     protected $casts = [
         'id' => 'integer',
+        'name' => 'string',
         'email' => 'string',
         'password' => 'string',
+        'token' => 'string',
+        'confirm' => 'boolean',
         'isAdmin' => 'boolean',
         'remember_token' => 'string',
         'created_at' => 'datetime',
-        'updated_at' => 'datetime'
+        'updated_at' => 'datetime',
+        'from_network' => 'string',
+        'ip' => 'string',
     ];
 
     protected $dates = [

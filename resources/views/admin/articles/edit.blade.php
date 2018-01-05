@@ -13,6 +13,26 @@
             </div>
 
             <div class="form-group">
+                <label for="">Choose category</label>
+                <select class="form-control" name="category_id">
+                    @if($article->category_id)
+                        <option value="{{ $article->category_id}}" selected="selected">
+                            {{ \App\Entities\Category::find($article->category_id)['title']}}
+                        </option>
+                    @else
+                        <option value="" selected="selected">
+
+                        </option>
+                    @endif
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}">
+                            {{$category->title}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="">Enter text </label>
                 <textarea name="short_text" class="form-control" cols="30" rows="5">
                     {!! $article->short_text !!}
