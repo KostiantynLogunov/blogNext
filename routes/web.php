@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::match(['get','post'],'/', 'welcomeContrller@index')->name('welcome.index');
 Route::get('/article/{id}', 'welcomeContrller@show')->where('id','\d+')->name('welcome.show');
 Route::post('/article/{id}', 'welcomeContrller@saveComment')->where('id','\d+')->name('welcome.saveComment');
